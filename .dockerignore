@@ -1,0 +1,35 @@
+# Node modules e dipendenze locali
+node_modules
+npm-debug.log
+yarn-error.log
+.pnpm-store
+
+# Dist e build locali
+dist
+build
+out
+.tmp
+.cache
+.nx/cache
+
+# Git
+.git
+.gitignore
+
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Env locali
+.env
+.env.local
+.env.*.local
+
+# File di log e OS
+.DS_Store
+*.log
+
+# IDE/editor
+.vscode
+.idea
+*.iml
