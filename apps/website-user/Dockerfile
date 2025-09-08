@@ -35,11 +35,20 @@ RUN npx nx build website-user
 # Stage 2: Runtime con Nginx
 FROM nginx:alpine
 
+RUN apk add --no-cache bash
+
 # Copia la build generata da NX/Vite
 COPY --from=builder /app/dist/apps/website-user /usr/share/nginx/html
 
 # Copia la configurazione Nginx personalizzata
 COPY apps/website-user/default.conf /etc/nginx/conf.d/default.conf
 
+# Copia lo script wait-for-it
+COPY apps/website-user/wait-for-it.sh /wait-for-it.sh
+RUN chmod +x /wait-for-it.sh
+
 EXPOSE 80
-CMD ["nginx", "-g", "daemon off;"]
+
+# Avvia Nginx solo quando l'API è pronta
+CMD ["/wait-for-it.sh", "api:3000", "--", "nginx", "-g", "daemon off;"]
+
